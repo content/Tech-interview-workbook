@@ -245,28 +245,110 @@ if __name__ == "__main__":
     - Fejlett, kód-alapú, valós böngésző-vezérlő API
 
 #### ✅ Hogyan lehet azonosítani a webes elemeket?
+1. ID
+2. Name
+3. Osztály név
+4. Elem név
+5. Link / Részleges Link szöveg
+6. XPath
+7. CSS kijelölő
 
 #### ✅ Hogyan lehet várni az elemekre, és mi lehet a probléma? Gyűjtsd össze a lehetséges hibákat és okokat!
+A Selenium támogatja a várakozási stratégiákat:
+
+##### Implicit wait (általános várakozás)
+```py
+    driver.implicitly_wait(10)  # másodpercben
+```
+
+##### Explicit wait (csak egy adott feltételre vár)
+```py
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+
+    wait = WebDriverWait(driver, 10)
+    element = wait.until(EC.visibility_of_element_located((By.ID, "email")))
+```
+
+#### Fluent wait (Testre szabható várakozás)
+- Meghatározható a lekérdezés gyakorisága, és hogy milyen kivételeket ignoráljon.
 
 #### ✅ Hasonlítsd össze a POM és a Keyword Driven Testing megközelítéseket!
+| Tulajdonság               | **POM (Page Object Model)**         | **Keyword Driven Testing (KDT)**          |              |            |
+| ------------------------- | ----------------------------------- | ----------------------------------------- | ------------ | ---------- |
+| **Célközönség**           | Fejlesztők, teszt automatizálók     | Tesztelők, akár kód nélkül is             |              |            |
+| **Tesztleírás módja**     | Kódalapú (pl. Python, Java)         | Kulcsszavak, táblázatok                   |              |            |
+| **Karakterisztika**       | Objektum-orientált, strukturált     | Leíró, adatvezérelt                       |              |            |
+| **Újrafelhasználhatóság** | Magas (page class-ok)               | Magas (kulcsszavak)                       |              |            |
+| **Karbantarthatóság**     | Jó, ha jól strukturált              | Kihívás, ha sok kulcsszó van              |              |            |
+| **Használati példa**      | `LoginPage.login_with_valid_user()` | \`OPEN\_BROWSER                           | URL`, `CLICK | loginBtn\` |
+| **Bevezetési költség**    | Közepes                             | Magas (framework + kulcsszók fejlesztése) |              |            |
+| **Tanulási görbe**        | Fejlesztőknek egyszerű              | Tesztelőknek is barátságos                |              |            |
+
 
 #### ✅ Mi a különbség a TDD és BDD között?
+| Tulajdonság    | TDD (Test-Driven Development) | BDD (Behavior-Driven Development) |
+| -------------- | ----------------------------- | --------------------------------- |
+| Teszt típusa   | Egységteszt                   | Funkcionális viselkedésteszt      |
+| Tesztek nyelve | Kód (pl. Python, Java)        | Természetes nyelv (Gherkin)       |
+| Fókusz         | Kód működése                  | Felhasználói viselkedés           |
+| Résztvevők     | Fejlesztők                    | Fejlesztők, tesztelők, üzlet      |
+| Teszt eszközök | pl. JUnit, NUnit, Pytest      | pl. Cucumber, SpecFlow, Behave    |
+| Kommunikáció   | Technikai                     | Üzleti és technikai is értik      |
+| Dokumentáció   | Kód szintű                    | Élő specifikáció                  |
+
 
 #### ✅ Mi az API tesztelés és miért hasznos?
+Az API tesztelés (Application Programming Interface testing) a szoftvertesztelés egyik típusa, amely során az alkalmazás háttérrétegét (API-kat) teszteljük — a felhasználói felület kihagyásával. Ez lehetővé teszi, hogy a rendszer működését korán, gyorsan és pontosan ellenőrizzük.
 
 #### ✅ Mi az adatvezérelt tesztelés és miért hasznos?
+Az adatvezérelt tesztelés (Data-Driven Testing, DDT) egy olyan tesztelési módszer, amelyben ugyanazt a tesztszkriptet futtatjuk különböző bemeneti adatokkal. A tesztadatokat általában külső forrásból (pl. Excel, CSV, adatbázis, JSON, XML) olvassuk be, és a teszt ezek alapján ismétlődik meg.
 
-#### ✅ Mik a kihivások és ajánlott eljárások a dinamikusan betöltött webes elemekkel?
+#### ✅ Mik a kihívások és ajánlott eljárások a dinamikusan betöltött webes elemekkel?
+A dinamikusan betöltött webes elemek, késleltetve megjelenő gombok, listák, értesítések komoly kihívást jelentenek az automatizált tesztelésben (pl. Selenium). Ezek az elemek nem mindig elérhetők azonnal, így a szkriptek időzítési hibákat (pl. ElementNotFoundException) okozhatnak.
 
-#### ✅ Mik a mobil tesztautomatizálás kihivásai?
+#### ✅ Mik a mobil tesztautomatizálás kihívásai?
+A mobil tesztautomatizálás számos előnyt kínál (gyorsabb tesztelés, CI/CD támogatás), de sokkal komplexebb, mint a webes automatizálás. Ennek oka a platformfüggőség, a hardverváltozatosság, és az UI-k dinamikus viselkedése.
 
 ## Haladó témák
 <img src="https://www.softwaretestinghelp.com/wp-content/qa/uploads/2020/05/DevOps-in-a-Selenium-Testing.png" alt="image" width="320" height="220">
 
 #### ✅ Mi a különbség a CI és CD között?
+A CI és CD a szoftverfejlesztésben használt automatizálási gyakorlatok, amelyek célja a gyors, megbízható és gyakori szoftverkiadás. Bár gyakran együtt említik őket, más célt szolgálnak:
 
-#### ✅ irj le egy Continuous Delivery folyamatot!
+| CD típus                  |   Jelentés                                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------- |
+| **Continuous Delivery**   | A kód automatikusan eljut **tesztelt, kiadásra kész** állapotba (manuális jóváhagyás után lehet kiadni) |
+| **Continuous Deployment** | A kód **teljesen automatikusan** települ a produkciós környezetbe                                       |
 
-#### ✅ Hasonlitsd össze két népszerű CI rendszert, ezek közül az egyik legyen a Jenkins!
+
+#### ✅ Írj le egy Continuous Delivery folyamatot!
+1. Kód commit & push
+2. Build
+3. Automatizált tesztek futtatása
+4. Build artifact mentése
+5. Staging környezetbe telepítés
+6. Manuális jóváhagyás (opcionális)
+7. Production release (manuális lépés)
+
+
+#### ✅ Hasonlítsd össze két népszerű CI rendszert, ezek közül az egyik legyen a Jenkins!
+| Tulajdonság               | Jenkins                                          | GitHub Actions                                         |
+| ------------------------- | ------------------------------------------------ | ------------------------------------------------------ |
+| **Telepítés**             | Saját szerverre kell telepíteni, teljes kontroll | Felhőalapú, GitHub-ba integrált, nincs külön telepítés |
+| **Nyílt forráskód**       | Igen, teljesen nyílt forráskódú                  | Igen, de GitHub platform részeként                     |
+| **Könnyű használat**      | Kezdőknek bonyolultabb, sok konfiguráció         | Felhasználóbarát, YAML alapú workflow-k                |
+| **Integráció**            | Nagy plugin-ökoszisztéma (\~1500 plugin)         | Erős GitHub és GitHub Marketplace integráció           |
+| **Konfiguráció**          | Webes UI vagy Jenkinsfile (Pipeline-as-Code)     | YAML fájlok a repository-ban                           |
+| **Skálázhatóság**         | Lokális vagy cloud agentekkel skálázható         | Felhő által kezelt, automatikus skálázódás             |
+| **Költség**               | Ingyenes, de saját infrastruktúrát igényel       | Ingyenes nyilvános repo-hoz, privátnál fizetős         |
+| **CI/CD támogatás**       | Teljeskörű, bármilyen projektben használható     | Erős GitHub-centrikus CI/CD                            |
+| **Támogatott nyelvek**    | Minden nyelv, bármilyen build rendszer           | Minden nyelv, különböző runner-ekkel                   |
+| **Felhasználói közösség** | Nagy, régóta működő, sok tutorial                | Gyorsan növekvő, GitHub közösségen belül               |
+| **Biztonság**             | Saját felelősség a biztonság és frissítések      | GitHub kezeli, automatikus frissítések                 |
+| **Fejlesztési sebesség**  | Függ a konfigurációtól és infrastruktúrától      | Gyorsan indul és fut, nincs infra karbantartás         |
+
 
 #### ✅ Mi a Docker és miért hasznos?
+A Docker egy nyílt forráskódú platform, amely lehetővé teszi alkalmazások konténerekbe csomagolását, szállítását és futtatását. A konténerek olyan könnyű, izolált környezetek, amelyekben az alkalmazás és annak függőségei együtt futnak, függetlenül a futtató rendszer környezetétől.
